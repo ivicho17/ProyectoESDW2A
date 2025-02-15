@@ -1,0 +1,79 @@
+{% extends 'cabecera.html.twig' %}
+{% block body %}
+    <h1>Perfil de usuario</h1>
+    <img src="{{ asset('pfps/' ~ usuario.ruta) }}" alt="Foto de perfil" class="profile-picture">
+    <p>{{ usuario.nombre ~ ' ' ~ usuario.apellido}}</p>
+    <h3>Biografia</h3>
+    <p>{{ usuario.biografia }}</p>
+    {% if usuario.cumpleaños != '' and usuario.cumpleaños != null %}
+        <h3>Cumpleaños</h3>
+        <p>{{ usuario.cumpleaños }}</p>
+    {% endif %}
+     {% if usuario.localidad != '' and usuario.localidad != null %}
+        <h3>Localidad</h3>
+        <p>{{ usuario.localidad }}</p>
+    {% endif %}
+    {% if usuario.id == app.user.id %}
+        <a href="/editarPerfil" class="btn btn-primary">Editar perfil</a>
+    {% endif %}
+    <hr>
+    <h3>Publicaciones</h3>
+    <style>
+        .post-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: left;
+        }
+        .post {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 250px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .post:hover {
+            transform: scale(1.05);
+        }
+        .post img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+        .post .descripcion {
+            padding: 15px;
+            font-size: 14px;
+            color: #333;
+        }
+        .blur {
+            filter: blur(20px);
+        }
+        .profile-picture {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+    </style>
+    <div class="post-container">
+        {% for post in posts %}
+            <div class="post">
+                {% if post.isAdult %}
+                    <a href='/posts/{{post.num}}'><img src="{{ asset('Posts/' ~ post.ruta) }}" alt="Imagen" class="blur" /></a>
+                {% else %}
+                    <a href='/posts/{{post.num}}'><img src="{{ asset('Posts/' ~ post.ruta) }}" alt="Imagen" /></a>
+                {% endif %}
+                <div class="descripcion">
+                    {{ post.fecha }}
+                    <br>
+                    {{ post.numComentarios }} <box-icon type='solid' name='chat' color='green' style='position:relative; top:6px;'></box-icon>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+{% endblock %}

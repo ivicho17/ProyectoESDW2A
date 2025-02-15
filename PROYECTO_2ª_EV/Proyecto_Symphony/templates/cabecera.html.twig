@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PHOTOSNAP</title>
+    <style>
+        .cabecera {
+            background-color:rgb(134, 194, 24); 
+            padding: 10px;
+            margin: 0px 0px 15px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .cabecera .titulo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .cabecera .acciones {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .cabecera .acciones img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .cabecera a {
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cabecera a:hover {
+            color: darkgreen;
+        }
+        .cabecera .acciones button {
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .cabecera .acciones button:hover {
+            background-color: #E64A19;
+        }
+        .logout{
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="cabecera">
+        <a href="/home"><div class="titulo">ValoChat</div></a>
+        {% if app.user %}
+        <div class="acciones">
+                <a href='/perfilLogeado'>
+                <span style="text-align: center;">{{ app.user.Email }}</span>
+                <img src={{ asset('pfps/' ~ app.user.RutaPfp) }} alt='Perfil'>
+                </a>
+                <form action='/logout' method='GET' style='float: right;'>
+                <button type='submit'>Cerrar Sesión</button>
+                </form>
+        </div>
+        {% endif %}
+    </div>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

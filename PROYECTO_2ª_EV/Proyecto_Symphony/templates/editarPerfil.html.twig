@@ -1,0 +1,90 @@
+{% extends 'cabecera.html.twig' %}
+{% block body %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container input[type="text"],
+.form-container input[type="date"],
+.form-container input[type="file"],
+.form-container textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-container input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(134, 194, 24);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: rgb(114, 163, 22);
+}
+
+.return-link {
+    display: block;
+    text-align: center;
+    margin: 20px 0;
+    color: rgb(134, 194, 24);
+    text-decoration: none;
+}
+
+.return-link:hover {
+    text-decoration: underline;
+}
+
+.profile-img {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 150px;
+    border-radius: 50%;
+}
+</style>
+    <h1>Perfil de usuario</h1>
+    <img src="{{ asset('pfps/' ~ usuario.ruta) }}" alt="Foto de perfil" class="profile-img">
+    <form action="{{ path('guardarCambios') }}" method="post" enctype="multipart/form-data" class="form-container">
+    Cambiar foto de perfil: <input type='file' name='foto' value="{{ asset('pfps/' ~ usuario.ruta) }}"></input>
+    <br><br>
+    Nombre: <input type='text' name='nombre' required value="{{ usuario.nombre }}"></input>
+    <br><br>
+    Apellido: <input type='text' name='apellido' required value="{{ usuario.apellido }}"></input>
+    <br><br>
+    Biografia:<textarea name="biografia" required cols="30" rows="10">{{ usuario.biografia }}</textarea>
+    <br><br>
+    <h4>(Opcional)</h4>
+    <br>
+    Cumpleaños: <input type='date' name='cumpleaños' value="{{ usuario.cumpleaños }}"></input>
+    <br><br>
+    Localidad: <input type='text' name='localidad' value="{{ usuario.localidad }}"></input>
+    <br><br>
+    <input type='submit' value='Guardar cambios'></input><br><br>
+    </form>
+    <a href="{{ path('home') }}" class="return-link">Volver al inicio</a>
+{% endblock %}

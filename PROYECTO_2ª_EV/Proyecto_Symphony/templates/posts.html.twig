@@ -1,0 +1,23 @@
+{% extends 'cabecera.html.twig' %}
+{% block body %} 
+        {% for post in posts %}
+            <h2>{{ post.titulo }}</h2>
+            {% if post.ruta %}
+                {% if post.isAdult %}
+                    <style>
+                        .blur {
+                            filter: blur(20px);
+                            
+                        }
+                        .imagen{
+                            border: 2px solid black;
+                        }
+                    </style>
+                    <div class='imagen'><img src={{ asset('Posts/' ~ post.ruta) }} alt="Imagen" class="blur" /></div>
+                {% else %}
+                    <div class='imagen'><img src={{ asset('Posts/' ~ post.ruta) }} alt="Imagen" /></div>
+                {% endif %}
+            {% endif %}
+            <p>{{ post.mensaje }}</p>
+        {% endfor %}
+{% endblock %}

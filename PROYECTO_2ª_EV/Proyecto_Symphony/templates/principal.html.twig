@@ -1,0 +1,172 @@
+{% extends 'cabecera.html.twig' %}
+{% block body %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#menu {
+    width: 100%;
+}
+
+#menu button {
+    height: 75px; 
+    width: 50%;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    font-size: 16px;
+    float: left;
+}
+
+#menu button.active {
+    background-color: rgb(215, 236, 176);
+    border: 1px solid black;
+    border-bottom: none;
+}
+
+button:hover {
+    background-color: rgb(218, 218, 218);
+}
+
+#todos, #amigos {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+#todos.active, #amigos.active {
+    display: grid;
+}
+
+.usuario {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.usuario h4 {
+    color: #333;
+    font-size: 18px;
+    margin: 0 0 10px;
+}
+
+.usuario p {
+    color: #666;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.usuario a img {
+    width: 24px;
+    height: 24px;
+    margin-top: 10px;
+}
+
+.fotoPerfil {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+}
+
+#fondo {
+    background-color: rgb(215, 236, 176);
+    min-height: calc(100vh - 75px);
+}
+a{
+    text-decoration: none;
+}
+</style>
+<div id="fondo">
+<div id="menu">
+    <button id="Todos" class="active" onClick="cambiarATodos();">Todos</button>
+    <button id="Amigos" onClick="cambiarAAmigos();">Amigos</button>
+</div>
+<div id="todos" class="active">
+    {% for usuario in usuarios %}
+    {% if usuario.id != app.user.id %}
+    <div class='usuario'>
+        <img class='fotoPerfil' src={{ asset('pfps/' ~ usuario.ruta) }}>
+        <a href='{{ path('perfil', {'id': usuario.id}) }}'>
+        <h4>{{ usuario.nombre ~ ' ' ~ usuario.apellido }}</h4>
+        <box-icon name="rocket" color="green"></box-icon>
+        </a>
+        <p>{{ usuario.biografia }}</p>
+        <a href='#' class='add-friend' onclick="enviarPeticion({{ usuario.id }})" data-user-id='{{ usuario.id }}'>
+            <img src={{ asset('AñadirAmigo.png') }} class="add-friend-img">
+        </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+<div id="amigos">
+    {% for usuario in usuarios %}
+    {% if usuario.id in app.user.amigos %}
+    {% if app.user.id in usuario.amigos %}
+    <div class='usuario'>
+        <img class='fotoPerfil' src={{ asset('pfps/' ~ usuario.ruta) }}>
+        <a href='{{ path('perfil', {'id': usuario.id}) }}'>
+        <h4>{{ usuario.nombre ~ ' ' ~ usuario.apellido }}</h4>
+        </a>
+        <p>{{ usuario.biografia }}</p>
+        <a href='#' class='add-friend' onclick="enviarPeticion({{ usuario.id }})"data-user-id='{{ usuario.id }}'>
+         <img src={{ asset('AñadirAmigo.png') }} class="add-friend-img">
+        </a>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".add-friend").forEach(link => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            
+            let img = this.querySelector(".add-friend-img");
+
+            if (!img.classList.contains("clicked")) {
+                // Crear una nueva imagen con timestamp para evitar la recarga del GIF
+                img.src = "{{ asset('PeticionEnviada.gif') }}?" + new Date().getTime();
+                img.classList.add("clicked");
+            }
+        });
+    });
+});
+
+function cambiarAAmigos() {
+    document.getElementById('todos').classList.remove('active');
+    document.getElementById('amigos').classList.add('active');
+    document.getElementById('Amigos').classList.add('active');
+    document.getElementById('Todos').classList.remove('active');
+}
+
+function cambiarATodos() {
+    document.getElementById('todos').classList.add('active');
+    document.getElementById('amigos').classList.remove('active');
+    document.getElementById('Todos').classList.add('active');
+    document.getElementById('Amigos').classList.remove('active');
+}
+
+function enviarPeticion(id){
+    let ajax = new XMLHttpRequest();
+    ajax.open("GET", "/enviarPeticion/" + id, true)
+    ajax.send();
+
+}
+</script>
+ 
+{% endblock %}
