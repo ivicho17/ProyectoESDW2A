@@ -35,6 +35,8 @@ CREATE OR REPLACE TABLE `usuarios` (
   `contraseña` varchar(100) NOT NULL,
   `teléfono` int(10),
   `biografia` varchar(500),
+  `cumpleaños` varchar(10),
+  `localidad` varchar(100),
   `ruta_pfp` varchar(100) DEFAULT 'pfps/default.png',
   `verificado` BOOLEAN DEFAULT 0,
   `cod_verificacion` varchar(8) UNIQUE,
@@ -46,11 +48,11 @@ CREATE OR REPLACE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `email`, `contraseña`, `biografia`, `verificado`, `ruta_pfp`, `amigos`) VALUES
-(1, 'Isidoro', 'Gangrenado Poyato', 'isidorogangrenado@gmail.com', '1234', 'Actor', 1, 'default.png', '3?4'),
-(2, 'Marta', 'Pincho Moruno', 'martapincho@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Politóloga', 1, 'default.png', '5'),
-(3, 'Dolores', 'Miasma Musgo', 'doloresmiasma@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Enfermera especializada en enfermedades crónicas.', 1  , 'default.png', '1'),
-(4, 'Eva', 'Salmón Vejestorio', 'evasalmon@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Antropóloga. Vivo culturas y plasmo aquí su magia. Especializada en tribus africanas con años de experiencia en trabajo de campo. Autora de "¿Son monos o negros? Una guía detallada para distinguirlos" ', 1, 'default.png', '1'),
-(5, 'Pinocho', 'Cromosoma Fútbol', 'pinochocromosoma@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Bombero', 1, 'default.png', '2');
+(1, 'Isidoro', 'Gangrenado Poyato', 'isidorogangrenado@gmail.com', '1234', 'Actor', 1, '1.jpg', '3?4?5'),
+(2, 'Marta', 'Pincho Moruno', 'martapincho@gmail.com', '1234', 'Politóloga', 1, '2.jpg', '5'),
+(3, 'Dolores', 'Miasma Musgo', 'doloresmiasma@gmail.com', '1234', 'Enfermera especializada en enfermedades crónicas.', 1  , '3.jpg', '1'),
+(4, 'Eva', 'Salmón Vejestorio', 'evasalmon@gmail.com', '1234', 'Antropóloga. Vivo culturas y plasmo aquí su magia. Especializada en tribus africanas con años de experiencia en trabajo de campo. Autora de "¿Son monos o negros? Una guía detallada para distinguirlos" ', 1, '4.jpg', '1'),
+(5, 'Pinocho', 'Cromosoma Fútbol', 'pinochocromosoma@gmail.com', '1234', 'Bombero', 1, '5.jpg', '2?1');
 
 -- --------------------------------------------------------
 
