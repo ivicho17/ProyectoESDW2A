@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\Post;
 use App\Entity\Comentario;
 use App\Entity\Usuario;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class ControladorPosts extends AbstractController{
@@ -29,6 +30,41 @@ class ControladorPosts extends AbstractController{
         }
     return $this->render("posts.html.twig", ['posts' => $posts]);
 }
+
+#[Route('/nuevoPost', name: 'nuevoPost')]
+public function nuevoPost()
+	{
+		return $this->render('nuevoPost.html.twig');
+	}
+	
+#[Route('/guardarPost', name:'guardarPost')]	
+
+	public function guardarCambios(EntityManagerInterface $entityManager, Request $request)
+	{		
+		$titulo = $request->request->get('titulo');
+        $mensaje = $request->request->get('mensaje');
+        $etiquetas = $request->request->get('etiquetas');
+        $adulto = $request->request->get('adulto');
+        $foto = $request->files->get('foto');
+
+        $post = new Post();
+        $post->setTitulo($titulo);
+        $post->setMensaje($mensaje);
+        $post->setEtiquetas($etiquetas);
+        $post->setAutor($this->getUser()->getId());
+        $post->setIsAdult($adulto);
+        $post->setFecha(new \DateTime());
+		
+		if($foto != null){
+			$nombreFoto = $foto->getClientOriginalName();
+			$foto->move('Posts', $nombreFoto);
+			$foto = $nombreFoto;
+            $post->setRuta($foto);
+		}
+		$entityManager->persist($post);
+		$entityManager->flush();
+		return $this->redirectToRoute('perfil', ['id' => $this->getUser()->getId()]);
+		}
 
 #[Route('/posts/{id}', name: 'post')]
 public function mostrarPost(EntityManagerInterface $entityManager, SessionInterface $session, $id){
@@ -67,4 +103,22 @@ public function mostrarPost(EntityManagerInterface $entityManager, SessionInterf
 
     return $this->render("post.html.twig", ['post' => $elem , 'comentarios' => $comentarios, 'autorPost' => $autorPost]);
 }
+#[Route('/nuevoComentario', name: 'nuevoComentario')]
+public function nuevoComentario(EntityManagerInterface $entityManager, Request $request)
+	{
+        $mensaje = $request->request->get('comentario');
+        $idPost = $request->request->get('idPost');
+
+        $com = new Comentario();
+
+        $com->setMensaje($mensaje);
+        $com->setAutor($this->getUser()->getId());
+        $com->setFecha(new \DateTime());
+        $com->setPost($idPost);
+
+        $entityManager->persist($com);
+        $entityManager->flush();
+		return $this->redirectToRoute('post', ['id' => $idPost]);
+		
+	}
 }

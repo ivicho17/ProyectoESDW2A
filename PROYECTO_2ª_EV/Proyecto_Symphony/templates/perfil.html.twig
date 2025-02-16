@@ -1,6 +1,10 @@
 {% extends 'cabecera.html.twig' %}
 {% block body %}
+    {% if usuario.id == app.user.id %}
+        <a href="/editarPerfil" class="btn btn-primary mb-3">Editar perfil</a>
+    {% endif %}
     <h1>Perfil de usuario</h1>
+    
     <img src="{{ asset('pfps/' ~ usuario.ruta) }}" alt="Foto de perfil" class="profile-picture">
     <p>{{ usuario.nombre ~ ' ' ~ usuario.apellido}}</p>
     <h3>Biografia</h3>
@@ -13,11 +17,11 @@
         <h3>Localidad</h3>
         <p>{{ usuario.localidad }}</p>
     {% endif %}
-    {% if usuario.id == app.user.id %}
-        <a href="/editarPerfil" class="btn btn-primary">Editar perfil</a>
-    {% endif %}
+    
     <hr>
-    <h3>Publicaciones</h3>
+     {% if usuario.id == app.user.id %}
+     <a href='/nuevoPost' class="btn btn-success mb-3">Crear publicación</a><h3>Publicaciones</h3>
+     {% endif %}
     <style>
         .post-container {
             display: flex;
@@ -57,6 +61,34 @@
             height: 150px;
             object-fit: cover;
             margin-bottom: 20px;
+        }
+        .btn {
+            float: right;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+        .mb-3 {
+            margin-bottom: 1rem;
         }
     </style>
     <div class="post-container">

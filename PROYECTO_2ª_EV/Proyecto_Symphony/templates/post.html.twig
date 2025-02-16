@@ -24,6 +24,11 @@
             </p>
             
             <hr>
+            <form action="{{ path('nuevoComentario') }}" method="post" class="comentario-form">
+                <input name="comentario" type="text" class="form-control comentario-input" placeholder="Escribe un comentario"></input>
+                <input name="idPost" type="hidden" value="{{ post.num }}"></input>
+                <button type="submit" class="btn btn-success comentario-btn"><box-icon name='send' type='solid' color='white' style='position:relative; '></box-icon></button>
+            </form>
             {% for comentario in comentarios %}
                 <div class="comentario">
                      <p class="comentario-fecha">{{ comentario.fecha|date('d/m/Y H:i') }}</p>
@@ -144,11 +149,12 @@
         }
 
         .comentario-fecha {
-        font-size: 0.85em;
-        color: #7f8c8d;
-        margin: 5px 0;
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin: 5px 0;
         }
-        #verImagen{
+
+        #verImagen {
             position: absolute;
             z-index: 1;
             top: 60%;
@@ -163,6 +169,33 @@
             cursor: pointer;
             border-radius: 10px;
         }
+
+        .comentario-form {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .comentario-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .comentario-btn {
+            background-color: #28a745;
+            border: none;
+            padding: 8px 20px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .comentario-btn box-icon {
+            vertical-align: middle;
+        }
     </style>
     <script>
         function quitarBlur() {
@@ -170,4 +203,5 @@
             document.querySelector('#verImagen').style.display = 'none';
         }
     </script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 {% endblock %}

@@ -32,10 +32,8 @@ class PerfilController extends AbstractController
 		$user['localidad'] = $usuario->getLocalidad();
 		}
 
-		
-
 		$posts = [];
-		$postsData = $entityManager->getRepository(Post::class)->findBy(['autor' => $usuario->getId()]);
+		$postsData = $entityManager->getRepository(Post::class)->findBy(['autor' => $usuario->getId()], ['fecha' => 'DESC']);
         foreach ($postsData as $post) {
         $elem = [];
 		$elem['num'] = $post->getNum();
@@ -87,12 +85,8 @@ class PerfilController extends AbstractController
 		$this->getUser()->setNombre($nombre);
 		$this->getUser()->setApellido($apellido);
 		$this->getUser()->setBiografia($biografia);
-		if($cumpleaños != null){
-			$this->getUser()->setCumpleaños($cumpleaños);
-		}
-		if($localidad != null){
-			$this->getUser()->setLocalidad($localidad);
-		}
+		$this->getUser()->setCumpleaños($cumpleaños);
+		$this->getUser()->setLocalidad($localidad);
 		
 		if($foto != null){
 			$nombreFoto = $foto->getClientOriginalName();

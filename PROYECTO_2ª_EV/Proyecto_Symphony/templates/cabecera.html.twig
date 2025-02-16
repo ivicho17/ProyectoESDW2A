@@ -61,7 +61,7 @@
         <a href="/home"><div class="titulo">ValoChat</div></a>
         {% if app.user %}
         <div class="acciones">
-                <a href='/perfilLogeado'>
+                <a href='/perfil/{{ app.user.id }}'>
                 <span style="text-align: center;">{{ app.user.Email }}</span>
                 <img src={{ asset('pfps/' ~ app.user.RutaPfp) }} alt='Perfil'>
                 </a>

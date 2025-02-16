@@ -67,23 +67,21 @@ h1 {
     border-radius: 50%;
 }
 </style>
-    <h1>Perfil de usuario</h1>
-    <img src="{{ asset('pfps/' ~ usuario.ruta) }}" alt="Foto de perfil" class="profile-img">
-    <form action="{{ path('guardarCambios') }}" method="post" enctype="multipart/form-data" class="form-container">
-    Cambiar foto de perfil: <input type='file' name='foto' value="{{ asset('pfps/' ~ usuario.ruta) }}"></input>
+    <h1>Nuevo Post</h1>
+    <form action="{{ path('guardarPost') }}" method="post" enctype="multipart/form-data" class="form-container">
+    Foto: <input type='file' name='foto' required></input>
     <br><br>
-    Nombre: <input type='text' name='nombre' required value="{{ usuario.nombre }}"></input>
+    Titulo: <input type='text' name='titulo' required ></input>
     <br><br>
-    Apellido: <input type='text' name='apellido' required value="{{ usuario.apellido }}"></input>
+    Mensaje: <textarea name="mensaje" cols="30" rows="10"></textarea>
     <br><br>
-    Biografia:<textarea name="biografia" required cols="30" rows="10">{{ usuario.biografia }}</textarea>
+    Etiquetas: <input type='text' name='etiquetas' placeholder='Introduce etiquetas separadas por comas'></input>
     <br><br>
-    <h4>(Opcional)</h4>
-    <br>
-    Cumpleaños: <input type='date' name='cumpleaños' value="{{ usuario.cumpleaños }}"></input>
+    +18: <select name='adulto'>
+        <option default value='0'>No</option>
+        <option value='1'>Si</option>
+    </select>
     <br><br>
-    Localidad: <input type='text' name='localidad' value="{{ usuario.localidad }}"></input>
-    <br><br>
-    <input type='submit' value='Guardar cambios'></input><br><br>
+    <input type='submit' value='Guardar cambios'><br><br>
     </form>
 {% endblock %}

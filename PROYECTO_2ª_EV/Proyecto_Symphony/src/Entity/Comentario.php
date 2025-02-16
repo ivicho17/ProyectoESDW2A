@@ -44,8 +44,12 @@ class Comentario{
     {
         return $this->autor;
     }
+    public function setAutor($autor)
+    {
+        $this->autor = $autor;
+    }
 
-    public function setPost($fundacion)
+    public function setPost($post)
     {
         $this->post = $post;
     }
@@ -58,7 +62,7 @@ class Comentario{
     {
         return $this->fecha;
     }
-	public function setFecha($socios)
+	public function setFecha($fecha)
     {
         $this->fecha = $fecha;
     }
