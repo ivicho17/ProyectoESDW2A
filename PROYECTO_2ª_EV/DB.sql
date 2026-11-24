@@ -90,7 +90,7 @@ INSERT INTO `posts` (`num`, `título`, `mensaje`, `etiquetas`, `autor`, `ruta`, 
 (2, 'TRIBU SIRU', 'La tribu Siru, en Etiopía, se caracteriza por las dilataciones y las escarificaciones que usan como expresión artística y cultural.', 'antropología, nudismo', 4, 'TribuSuri.jpg', 1);
 
 INSERT INTO `comentarios` (`num`, `mensaje`, `post`, `autor`) VALUES
-(1, 'ALAAAAA vaya bubis tienes guapaaaaa', 1, 1  ),
+(1, 'Que tribu tan interesante', 1, 1  ),
 (2, 'PERO Y COMO NO LES PICA TODO CON LAS PLANTAS Y LOS MOSQUITOS, q locura ir desnudo', 2, 2  );
 
 --
